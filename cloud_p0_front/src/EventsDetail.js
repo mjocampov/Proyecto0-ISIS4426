@@ -43,47 +43,7 @@ class EventsDetail extends React.Component {
     render() {
 		return (
 			<div className="EventDetail">
-				<div className="container-sm card">
-					<div className="row">
-						<div className="col-md-6">
-							Correo electrónico
-						</div>
-						<div className="col-md-6">
-							<input type="text"
-								id="email"
-								className="form-control">
-							</input>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							Contraseña
-						</div>
-						<div className="col-md-6">
-							<input type="password"
-								id="password"
-								className="form-control">
-							</input>
-						</div>
-					</div>
-					<div className="row justify-content-center">
-						<button
-							type="submit"
-							className="btn btn-primary mb-2"
-							onSubmit={this.handleLogIn}>
-                            Iniciar sesión
-						</button>
-                        <button
-							type="submit"
-							className="btn btn-primary mb-2"
-							onSubmit={this.handleSingUp}>
-                            Registrarse
-						</button>
-					</div>
-					<div className="row justify-content-center">
-						<p className="error">{this.state.msg !== "OK" ? this.state.msg : ""}</p>
-					</div>
-				</div>
+
 			</div>
 		);
 	}

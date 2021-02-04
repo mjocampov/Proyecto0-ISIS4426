@@ -10,8 +10,12 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-#CORS
-cors = CORS(app, resources={r"*": {"origins": "*"}})
+# CORS
+CORS(app, resources={"*": {"origins": {"*", "http://localhost:3000/editareventos"}, }},
+     allow_headers={"origin", "content-Type", "Accept", "Authorization",
+                    "X-Request-With", "access-control-allow-credentials", "Cookie"},
+     supports_credentials=True
+     )
 
 # Environment variables
 app.config.from_envvar('ENV_FILE_LOCATION')
@@ -30,7 +34,6 @@ api = Api(app)
 
 # Authorization Token
 jwt = JWTManager(app)
-
 
 
 # User schema

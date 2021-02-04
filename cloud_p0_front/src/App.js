@@ -3,17 +3,15 @@ import React, { useState, useEffect } from "react";
 import LogIn from './LogIn.js';
 import EventsList from './EventsList.js';
 import EventsDetail from './EventsDetail.js';
+import CreateEvent from './CreateEvent.js';
 
 import logo from './logo.svg';
 import './App.css';
+
 const App = props => {
 	const [token, setToken] = useState(null);
 	const backURL = "http://172.24.98.163:5000";
 	useEffect(() => {
-		if(token !== null){
-
-
-		}
 	}, [token]);
 
 	const renderPage = (properties, component, name) => (
@@ -47,6 +45,13 @@ const App = props => {
 		            path="/eventdetail/:eventId"
 		            render={properties =>
 		              renderPage(properties, <EventsDetail {...properties} backURL={backURL} token={token} />, "EventDetail")
+		            }
+		            exact
+		          />
+		          <Route
+		            path="/createevent/"
+		            render={properties =>
+		              renderPage(properties, <CreateEvent {...properties} backURL={backURL} token={token} />, "CreateEvent")
 		            }
 		            exact
 		          />

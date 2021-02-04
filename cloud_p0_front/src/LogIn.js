@@ -43,9 +43,6 @@ class LogIn extends React.Component {
 		fetch(this.props.backURL+"/signup", {
 			  method: "POST",
 			  body: formData,
-			  headers : {
-			  	"Access-Control-Allow-Origin": "*"
-			  }
 			})
 			.then(response => response.json())
 			.then(json => {
