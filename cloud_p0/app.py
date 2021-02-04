@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from models import db, User, Event
 from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource
+from flask_restful.utils import cors
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import datetime
 
@@ -23,9 +24,11 @@ ma = Marshmallow(app)
 
 # API
 api = Api(app)
+api.decorators = [cors.crossdomain(origin='*')]
 
 # Authorization Token
 jwt = JWTManager(app)
+
 
 
 # User schema
@@ -49,6 +52,7 @@ events_schema = Event_Schema(many=True)
 
 
 class SignUpResource(Resource):
+    @cors.crossdomain(origin='*')
     def post(self):
         new_user = User(
             email=request.form.get('email'),
@@ -60,6 +64,7 @@ class SignUpResource(Resource):
 
 
 class LoginResource(Resource):
+    @cors.crossdomain(origin='*')
     def post(self):
         user_email = request.form.get('email')
         user_password = request.form.get('password')
@@ -73,13 +78,16 @@ class LoginResource(Resource):
 
 
 class EventsResource(Resource):
+
     @jwt_required
+    @cors.crossdomain(origin='*')
     def get(self):
         user_id = get_jwt_identity()
         events = Event.query.filter_by(user_id=user_id)
         return events_schema.dump(events)
 
     @jwt_required
+    @cors.crossdomain(origin='*')
     def post(self):
         user_id = get_jwt_identity()
         new_event = Event(
@@ -99,11 +107,13 @@ class EventsResource(Resource):
 
 class SingleEventResource(Resource):
     @jwt_required
+    @cors.crossdomain(origin='*')
     def get(self, event_id):
         event = Event.query.get_or_404(event_id)
         return event_schema.dump(event)
 
     @jwt_required
+    @cors.crossdomain(origin='*')
     def put(self, event_id):
         event = Event.query.get_or_404(event_id)
         if 'name' in request.form:
@@ -124,6 +134,7 @@ class SingleEventResource(Resource):
         return event_schema.dump(event)
 
     @jwt_required
+    @cors.crossdomain(origin='*')
     def delete(self, event_id):
         event = Event.query.get_or_404(event_id)
         db.session.delete(event)
@@ -143,4 +154,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
